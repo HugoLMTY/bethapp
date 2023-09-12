@@ -1,0 +1,21 @@
+name: auto-deploy
+run-name: ${{ github.actor }} is deploying
+on: [push]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set up SSH key
+      run: |
+        sudo su
+        mkdir -p ~/.ssh
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+        chmod 400 ~/.ssh/id_rsa
+        ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+        chmod 644 ~/.ssh/known_hosts
+    
+    - name: Deploy with SSH
+      run: |
+        ssh -i ~/.ssh/id_rsa ubuntu@ec2-35-180-208-136.eu-west-3.compute.amazonaws.com "cd /ect/ci; echo "wassup" >> hey"
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
