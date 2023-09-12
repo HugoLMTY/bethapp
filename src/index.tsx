@@ -10,12 +10,15 @@ const app = new Elysia()
   .get("/", ({ html }) =>
     html(
       <BaseHtml>
-        <body
-          class="flex w-full h-screen justify-center items-center"
+        <body>
+        <h1>BETH LAB</h1>
+        <div class="flex w-full h-screen justify-center items-center"
           hx-get="/todos"
           hx-swap="innerHTML"
           hx-trigger="load"
         />
+        </body>
+          
       </BaseHtml>
     )
   )

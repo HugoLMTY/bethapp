@@ -16,6 +16,6 @@ jobs:
     
     - name: Deploy with SSH
       run: |
-        ssh -i ~/.ssh/id_rsa ubuntu@ec2-35-180-208-136.eu-west-3.compute.amazonaws.com "cd /ect/ci; echo "wassup" >> hey"
+        ssh -i ~/.ssh/id_rsa ubuntu@ec2-35-180-208-136.eu-west-3.compute.amazonaws.com "cd /home/bethapp; sudo git pull; pm2 restart 0"
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
