@@ -16,7 +16,7 @@ jobs:
 
     # Ajoutez une étape pour se connecter au VPN
     - name: Connect to VPN
-      uses: bethapp/vpn-connect@v1
+      uses: ./.github/workflows/vpn-connect.yml
 
     - name: Deploy with SSH
       run: |
