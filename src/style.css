@@ -1,0 +1,19 @@
+th {
+  background-color: whitesmoke;
+  color: #000;
+  font-weight: 600;
+  padding: 10px;
+  text-align: center !important;
+  text-transform: uppercase;
+  min-width: 100px;
+}
+
+td {
+  background-color: #fff;
+  color: #000;
+  padding: 10px;
+  text-align: center;
+  min-width: 100px;
+
+  border-bottom: 1px solid #ddd;
+}
