@@ -5,6 +5,20 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install OpenVPN
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y openvpn
+
+    - name: Set up VPN
+      run: |
+        sudo mkdir -p ~/.ovpn
+        sudo echo "$OPENVPN_PRIVATE_KEY" > ~/.ovpn/key.ovpn
+        sudo openvpn --config ~/.ovpn/key.ovpn
+
     - name: Set up SSH key
       run: |
         mkdir -p ~/.ssh
@@ -13,10 +27,6 @@ jobs:
         ls -la ~/.ssh
         ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
         sudo chmod 644 ~/.ssh/known_hosts
-
-    # Ajoutez une étape pour se connecter au VPN
-    - name: Connect to VPN
-      uses: .github/workflows/vpn-connect
 
     - name: Deploy with SSH
       run: |
