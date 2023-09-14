@@ -21,7 +21,6 @@ jobs:
 
     - name: Set up VPN
       run: |
-        mkdir -p ~/.ovpn
-        echo "$OPENVPN_PRIVATE_KEY" > ~/.ovpn/key.ovpn
-        # Assurez-vous que votre fichier .ovpn est présent dans le répertoire courant
+        sudo mkdir -p ~/.ovpn
+        sudo echo "$OPENVPN_PRIVATE_KEY" > ~/.ovpn/key.ovpn
         sudo openvpn --config ~/.ovpn/key.ovpn
