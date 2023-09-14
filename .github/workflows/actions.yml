@@ -8,13 +8,15 @@ jobs:
     - name: Set up SSH key
       run: |
         sudo su
+        ufw allow ssh
         mkdir -p ~/.ssh
         echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+        chmod 400 ~/.ssh/id_rsa
         ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
         chmod 644 ~/.ssh/known_hosts
     
     - name: Deploy with SSH
       run: |
-        ssh -i ~/.ssh/id_rsa ubuntu@ec2-35-180-208-136.eu-west-3.compute.amazonaws.com "cd /home/bethapp; sudo git pull; pm2 restart 0"
+        ssh -vvv -i ~/.ssh/id_rsa ubuntu@ec2-35-180-208-136.eu-west-3.compute.amazonaws.com "cd /home/bethapp; sudo git pull; pm2 restart 0"
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
