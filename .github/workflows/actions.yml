@@ -16,7 +16,7 @@ jobs:
 
     # Ajoutez une étape pour se connecter au VPN
     - name: Connect to VPN
-      uses: /.github/workflows/vpn-connect
+      uses: .github/workflows/vpn-connect
 
     - name: Deploy with SSH
       run: |
