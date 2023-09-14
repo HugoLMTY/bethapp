@@ -13,17 +13,19 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y openvpn
 
+    - name: Set up environment
+      run: |
+        mkdir -p ~/.ssh
+        mkdir -p ~/.ovpn
+        echo "$OPENVPN_PRIVATE_KEY" > ~/.ovpn/key.ovpn
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+
     - name: Set up VPN
       run: |
-        sudo su
-        sudo mkdir -p ~/.ovpn
-        sudo echo "$OPENVPN_PRIVATE_KEY" > ~/.ovpn/key.ovpn
         sudo openvpn --config ~/.ovpn/key.ovpn
 
     - name: Set up SSH key
       run: |
-        mkdir -p ~/.ssh
-        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
         sudo chmod 600 ~/.ssh/id_rsa
         ls -la ~/.ssh
         ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
