@@ -7,14 +7,17 @@ jobs:
     steps:
     - name: Set up SSH key
       run: |
-        sudo ufw allow ssh
         mkdir -p ~/.ssh
         echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-        sudo chmod 400 ~/.ssh/id_rsa
+        sudo chmod 600 ~/.ssh/id_rsa
         ls -la ~/.ssh
         ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
         sudo chmod 644 ~/.ssh/known_hosts
-    
+
+    # Ajoutez une étape pour se connecter au VPN
+    - name: Connect to VPN
+      uses: bethapp/vpn-connect@v1
+
     - name: Deploy with SSH
       run: |
         ssh -vvv -i ~/.ssh/id_rsa ubuntu@ec2-35-180-208-136.eu-west-3.compute.amazonaws.com "cd /home/bethapp; sudo git pull; pm2 restart 0"

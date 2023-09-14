@@ -1,0 +1,27 @@
+name: VPN Connection
+
+on:
+  workflow_run:
+    workflows: ["auto-deploy"]
+    types:
+      - completed
+
+jobs:
+  vpn-connect:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install OpenVPN
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y openvpn
+
+    - name: Set up VPN
+      run: |
+        mkdir -p ~/.ovpn
+        echo "$OPENVPN_PRIVATE_KEY" > ~/.ovpn/key.ovpn
+        # Assurez-vous que votre fichier .ovpn est présent dans le répertoire courant
+        sudo openvpn --config ~/.ovpn/key.ovpn
