@@ -10,7 +10,8 @@ jobs:
         sudo su
         mkdir -p ~/.ssh
         echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-        chmod 400 ~/.ssh/id_rsa
+        ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+        chmod 644 ~/.ssh/known_hosts
     
     - name: Deploy with SSH
       run: |
