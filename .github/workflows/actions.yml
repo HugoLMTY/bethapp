@@ -8,23 +8,23 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Set up environment
+      run: |
+        mkdir -p ~/.ssh
+        mkdir -p ~/.ovpn
+        echo "$OPENVPN_PRIVATE_KEY" > ~/.vpnkey/key.ovpn
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+        sudo chmod 600 ~/.ssh/id_rsa
+        cat ~/.vpnkey/key.ovpn
+
     - name: Install OpenVPN
       run: |
         sudo apt-get update
         sudo apt-get install -y openvpn
 
-    - name: Set up environment
-      run: |
-        mkdir -p ~/.ssh
-        mkdir -p ~/.ovpn
-        echo "$OPENVPN_PRIVATE_KEY" > ~/.ovpn/key.ovpn
-        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-        sudo chmod 600 ~/.ssh/id_rsa
-        cat ~/.ovpn/key.ovpn
-
     - name: Set up VPN
       run: |
-        sudo openvpn --config ~/.ovpn/key.ovpn
+        sudo openvpn --config ~/.vpnkey/key.ovpn
 
     - name: Set up SSH key
       run: |
