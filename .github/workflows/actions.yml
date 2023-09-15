@@ -15,27 +15,24 @@ jobs:
         echo "$OPENVPN_PRIVATE_KEY" > ~/.vpnkey/key.ovpn
         echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
         sudo chmod 600 ~/.ssh/id_rsa
-        cat ~/.vpnkey/key.ovpn
-        cat ~/.ssh/id_rsa
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    - name: Install OpenVPN
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y openvpn
+    # - name: Install OpenVPN
+    #   run: |
+    #     sudo apt-get update
+    #     sudo apt-get install -y openvpn
 
-    - name: Set up VPN
-      run: |
-        sudo openvpn --config ~/.vpnkey/key.ovpn
+    # - name: Set up VPN
+    #   run: |
+    #     sudo openvpn --config ~/.vpnkey/key.ovpn
 
     - name: Set up SSH key
       run: |
         sudo chmod 600 ~/.ssh/id_rsa
-        ls -la ~/.ssh
         ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
         sudo chmod 644 ~/.ssh/known_hosts
 
     - name: Deploy with SSH
       run: |
         ssh -vvv -i ~/.ssh/id_rsa ubuntu@ec2-35-180-208-136.eu-west-3.compute.amazonaws.com "cd /home/bethapp; sudo git pull; pm2 restart 0"
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
