@@ -8,20 +8,17 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up environment
+    - name: Set up SSH key
       run: |
         mkdir -p ~/.ssh
         echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
         sudo chmod 600 ~/.ssh/id_rsa
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-
-    - name: Set up SSH key
-      run: |
         sudo chmod 600 ~/.ssh/id_rsa
         ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
         sudo chmod 644 ~/.ssh/known_hosts
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
     - name: Deploy with SSH
       run: |
-        ssh -vvv -i ~/.ssh/id_rsa ubuntu@ec2-35-180-208-136.eu-west-3.compute.amazonaws.com "cd /home/bethapp; docker-compose down; docker-compose -f docker-compose.yml up -d"
+        ssh -vvv -i ~/.ssh/id_rsa ubuntu@35.180.208.136 "cd /home/bethapp; docker-compose down; docker-compose -f docker-compose.yml up -d"
