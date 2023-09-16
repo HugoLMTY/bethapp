@@ -22,4 +22,4 @@ jobs:
 
     - name: Deploy with SSH
       run: |
-        ssh -vvv -i ~/.ssh/id_rsa ubuntu@35.180.208.136 "cd /home/bethapp; docker-compose down; docker-compose -f docker-compose.yml up -d"
+        ssh -vvv -i ~/.ssh/id_rsa ubuntu@35.180.208.136 "cd /home/bethapp; git pull; docker-compose down; docker-compose -f docker-compose.yml up -d"
