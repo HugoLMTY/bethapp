@@ -1,8 +1,9 @@
-# docker-compose example for elysia app
 version: '1'
 services:
   elysia:
-    image: ./Dockerfile
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: elysia
     restart: always
     ports:
