@@ -15,11 +15,10 @@ jobs:
         sudo chmod 600 ~/.ssh/id_rsa
         sudo chmod 600 ~/.ssh/id_rsa
         ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-        ssh-keyscan 35.180.208.136 >> ~/.ssh/known_hosts
         sudo chmod 644 ~/.ssh/known_hosts
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
     - name: Deploy with SSH
       run: |
-        ssh -vvv -i ~/.ssh/id_rsa ubuntu@35.180.208.136 "sudo su; cd /home/bethapp; sudo git pull; bun i; sudo docker-compose down; sudo docker-compose -f ./docker-compose.yml up -d"
+        ssh -vvv -i ~/.ssh/id_rsa ubuntu@35.180.69.219 "sudo su; cd /home/bethapp; sudo git pull; bun i; sudo docker-compose down; sudo docker-compose -f ./docker-compose.yml up -d"
