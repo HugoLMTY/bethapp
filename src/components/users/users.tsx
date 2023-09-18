@@ -16,7 +16,7 @@ export function UserItem({ id, name, email, role }: User) {
         hx-trigger="click"
         data-bs-toggle="modal"
         data-bs-target="#update-modal"
-        class="btn btn-primary">Open Modal</button>
+        class="btn btn-primary">Edit</button>
 
       <div id="update-modal"
           class="modal modal-blur fade"
