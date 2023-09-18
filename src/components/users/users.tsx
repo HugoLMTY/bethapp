@@ -16,7 +16,9 @@ export function UserItem({ id, name, email, role }: User) {
         hx-trigger="click"
         data-bs-toggle="modal"
         data-bs-target="#update-modal"
-        class="btn btn-primary">Edit</button>
+        class="btn btn-sm btn-primary">
+          Edit
+      </button>
 
       <div id="update-modal"
           class="modal modal-blur fade"
@@ -33,7 +35,7 @@ export function UserItem({ id, name, email, role }: User) {
           hx-target={"#row_" + id}
           hx-confirm="T'es sûr?"
           class="btn btn-sm btn-secondary">
-          Delete
+            Delete
         </button>
       </td>
     </tr>
