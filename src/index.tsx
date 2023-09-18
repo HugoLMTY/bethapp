@@ -11,7 +11,7 @@ const app = new Elysia()
     html(
       <BaseHtml>
         <body>
-        <h1>YNOV CRM DEPLOY</h1>
+        <h1>YNOV CRM CI DEPLOY</h1>
         <div class="flex w-full h-screen justify-center items-center"
           hx-get="/users"
           hx-swap="innerHTML"
