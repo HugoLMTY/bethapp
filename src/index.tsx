@@ -1,13 +1,8 @@
-import { Elysia, t } from "elysia";
+import { Elysia } from "elysia";
 import { html } from "@elysiajs/html";
-import { eq } from "drizzle-orm";
 import * as elements from "typed-html";
 
-import { db } from "./db";
-import { User, users } from "./db/schema";
-
 import { BaseHtml } from "./components/base";
-import { AddUserForm, UserItem, UserList } from "./components/users/users";
 import { createUserEndpoint, deleteUserEndpoint, getUsersEndpoint, updateUserEndpoint, updateUserModal } from "./endpoints/users";
 
 const app = new Elysia()
@@ -23,7 +18,6 @@ const app = new Elysia()
           hx-trigger="load"
         />
         </body>
-          
       </BaseHtml>
     )
   )
